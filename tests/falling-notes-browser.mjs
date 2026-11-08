@@ -6,7 +6,7 @@ page.on('pageerror',e=>errors.push(String(e)))
 page.on('console',e=>{if(e.type()==='error')errors.push(e.text())})
 await page.route('**/__musicbox/study',route=>route.fulfill({json:{settings:null}}))
 await page.route('**/src/main.js*',async route=>{const response=await route.fetch();await route.fulfill({response,body:await response.text()+`\nlet onsetCount=0;const strike=audio.strike.bind(audio);audio.strike=midi=>{onsetCount++;strike(midi)};
-window.fallTest={ready:studio.ready,checkSpawn:settings=>{
+window.fallTest={reset:resetView,ready:studio.ready,checkSpawn:settings=>{
  studio.setCamera(settings);fallingNotes.clear();increment(PLAY_DIRECTION*Math.PI*2)
  const corners=new THREE.Vector3(),boxBounds=new THREE.Box3()
  const result=fallingNotes.root.children.filter(n=>n.visible).map(n=>{
@@ -46,7 +46,7 @@ try{
  assert.ok(result.particles.every(p=>p.bounds.min.y>-.012&&p.position[1]<.12))
  await page.screenshot({path:'verification/falling-notes-landed.png'})
  await page.evaluate(()=>window.fallTest.detail());await page.screenshot({path:'verification/falling-notes-felt-detail.png'})
- await page.getByRole('button',{name:'Reset view',exact:true}).click()
+ await page.evaluate(()=>window.fallTest.reset())
  checks.push('Slow descent/bounce reaches a stable floor pose without sinking below the surface')
  await page.evaluate(()=>window.fallTest.advance(Math.PI*2*12*4));assert.equal((await state()).count,100);assert.equal((await state()).maximum,100)
  await page.emulateMedia({reducedMotion:'reduce'});await page.waitForFunction(()=>window.fallTest.state().count===0);assert.equal((await state()).count,0)
@@ -66,7 +66,7 @@ try{
    assert.ok(selected.particles.every(p=>p.bounds.min.y>-.012&&p.bounds.min.y<.01))
    await page.evaluate(()=>{window.fallTest.close();window.fallTest.detail()})
    await page.screenshot({path:`verification/falling-notes-${shape}-detail.png`})
-   await page.getByRole('button',{name:'Reset view',exact:true}).click()
+   await page.evaluate(()=>window.fallTest.reset())
    await page.getByRole('button',{name:'Studio',exact:true}).click()
  }
  await page.locator('[id="control-fallingNotes.shape"]').selectOption('mixed')

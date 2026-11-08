@@ -194,7 +194,9 @@ function stop() {
   canvas.classList.remove('turning')
   if (id !== null && canvas.hasPointerCapture(id)) canvas.releasePointerCapture(id)
 }
+listen(window, 'keydown', () => canvas.classList.remove('pointer-focus'), { capture: true })
 listen(canvas, 'pointerdown', event => {
+  canvas.classList.add('pointer-focus')
   if (event.button !== 0 || activePointer !== null || capturing) return
   setRay(event)
   box.root.updateMatrixWorld(true)
@@ -278,7 +280,6 @@ function resetView() {
   stop()
   sceneState?.setCamera(clone(DEFAULT_SETTINGS.camera))
 }
-listen(document.querySelector('#reset'), 'click', resetView)
 function resize() {
   const width = app.clientWidth, height = app.clientHeight
   if (!width || !height) return

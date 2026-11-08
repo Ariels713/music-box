@@ -14,7 +14,8 @@ body { margin: 0; }
 canvas { display: block; touch-action: none; cursor: grab; }
 canvas.over-handle { cursor: pointer; }
 canvas.turning { cursor: grabbing; }
-canvas:focus-visible { outline: 2px solid var(--rose); outline-offset: -5px; border-radius: 30px; }
+canvas:focus { outline: none; }
+canvas:focus-visible:not(.pointer-focus) { outline: 2px solid var(--rose); outline-offset: -5px; border-radius: 30px; }
 header, footer { position: fixed; z-index: 1; pointer-events: none; }
 header {
   top: max(42px, env(safe-area-inset-top)); left: 5vw; right: 5vw;
@@ -30,7 +31,6 @@ button {
   font: inherit; font-size: 12px; font-weight: 500; white-space: nowrap; min-height: 44px; padding: 0 20px;
   border: 0; border-radius: 28px; color: var(--ink); background: #f6f5f8; cursor: pointer;
 }
-#reset svg { display: none; }
 #sound { background: var(--ink); color: white; }
 button:focus-visible { outline: 2px solid var(--rose); outline-offset: 3px; }
 @media (hover: hover) {
@@ -53,9 +53,6 @@ footer p { margin: 0; font-size: 12px; line-height: 1.7; }
   .eyebrow { max-width: 20ch; font-size: 8px; }
   .actions { gap: 4px; }
   button { padding: 0 12px; font-size: 11px; }
-  #reset { padding: 0; width: 44px; display: grid; place-items: center; }
-  #reset svg { display: block; }
-  #reset span { display: none; }
   footer { left: 28px; right: 28px; bottom: 35px; display: block; }
   .lead { font-size: 30px; max-width: 15ch; margin-bottom: 10px; }
   #status { margin-top: 10px; text-align: left; }

@@ -18,6 +18,7 @@ const onsets = [];
 const originalStrike = audio.strike.bind(audio);
 audio.strike = midi => { onsets.push({midi, time: performance.now()}); originalStrike(midi) };
 window.testBox = {
+ reset: resetView,
  ready: studio.ready,
  snapshot: () => ({distance:camera.position.distanceTo(controls.target),zoom:camera.zoom,crankVisual:box.crank.rotation.z,angle: crankAngle, cylinder: box.cylinder.rotation.x, active: activePointer, orbit: controls.enabled, camera: camera.position.toArray(), onsets: [...onsets], voices: audio.voices.length, audio: audio.context?.state}),
  project: angle => { const p = new THREE.Vector3(CRANK_CENTER.x + Math.cos(angle+CRANK_REST_ANGLE)*CRANK_RADIUS, CRANK_CENTER.y + Math.sin(angle+CRANK_REST_ANGLE)*CRANK_RADIUS, CRANK_CENTER.z+GRIP_OFFSET).project(camera); const r = canvas.getBoundingClientRect(); return {x:r.left+(p.x+1)*canvas.clientWidth/2,y:r.top+(1-p.y)*canvas.clientHeight/2} },
@@ -99,7 +100,7 @@ try {
   assert.notDeepEqual((await state()).camera, before.camera)
   assert.equal((await state()).angle, before.angle)
   checks.push('Dragging off crank orbits without mechanism movement')
-  await page.getByRole('button', { name: 'Reset view' }).click()
+  await page.evaluate(()=>window.testBox.reset())
   await page.locator('canvas').focus()
   before = await state()
   await page.keyboard.press('ArrowRight')
@@ -161,7 +162,7 @@ try {
   await page.screenshot({ path: 'verification/back.png' })
   await page.evaluate(() => window.testBox.view(0.1, -5, 0.2))
   await page.screenshot({ path: 'verification/underside.png' })
-  await page.getByRole('button', { name: 'Reset view' }).click()
+  await page.evaluate(()=>window.testBox.reset())
   await page.setViewportSize({ width: 390, height: 844 })
   await page.screenshot({ path: 'verification/mobile.png' })
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false)

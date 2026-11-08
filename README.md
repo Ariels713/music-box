@@ -43,7 +43,7 @@ Studio browser evidence: `verification/studio-desktop.png`, `verification/studio
 
 - A wooden base, contoured steel bed with a relief opening, bearing side plates, worm-shaft lugs, black cylinder caps and wheel, brass pinned cylinder, slotted comb, threaded fasteners, rounded wire crank, and metal grip.
 - Drag the grip in circles. Counterclockwise from the initial view plays forward; clockwise silently rewinds. Clicking or holding still does not turn anything. Release stops immediately; existing notes decay.
-- Drag elsewhere to orbit, including underneath. Scroll and pinch zoom are disabled; dragging only rotates the view. Studio camera controls still allow deliberate framing adjustments. Reset view restores the camera without resetting the mechanism.
+- Drag elsewhere to orbit, including underneath. Scroll and pinch zoom are disabled; dragging only rotates the view. Studio camera controls still allow deliberate framing adjustments. Camera reset is available only in the local Studio. The visitor header contains only the sound control.
 - Focus the canvas and tap right/up to advance, left/down to rewind. Key repeats are ignored: holding a key does not run the mechanism. Escape ends a grab.
 - Sound unlocks on a grip grab, arrow key, or sound-button click. The sound button mutes future strikes; existing notes finish decaying.
 
