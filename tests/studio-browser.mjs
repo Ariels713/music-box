@@ -25,7 +25,7 @@ inspect: () => ({ materials: Object.fromEntries(Object.entries(box.materials).ma
 })
 const range = async (id, value) => page.locator(`[id="control-${id}"]`).evaluate((el,value) => {el.value=value;el.dispatchEvent(new Event('input',{bubbles:true}))}, value)
 try {
-  await page.goto('http://localhost:5173/'); await page.waitForFunction(() => window.studioTest)
+  await page.goto('http://localhost:5173/?studio=1'); await page.waitForFunction(() => window.studioTest)
   await page.evaluate(() => window.studioTest.ready);if(await page.locator('#studio-toggle').getAttribute('aria-expanded')==='false')await page.locator('#studio-toggle').click()
   const initial = await page.evaluate(() => window.studioTest.settings())
   await range('materials.cylinder.roughness', .61)

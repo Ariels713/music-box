@@ -13,7 +13,7 @@ try{
   await page.route('**/src/main.js*',async route=>{const response=await route.fetch();await route.fulfill({response,body:await response.text()+`\nwindow.persistenceTest={ready:studio.ready,get:studio.getSettings};`})})
   const ready=async()=>{await page.waitForFunction(()=>window.persistenceTest);await page.evaluate(()=>window.persistenceTest.ready);if(await page.locator('#studio-toggle').getAttribute('aria-expanded')==='false')await page.locator('#studio-toggle').click()}
   try{
-   await page.goto('http://localhost:5173/');await ready()
+   await page.goto('http://localhost:5173/?studio=1');await ready()
    if(scenario==='immediate refresh'){
     await Promise.all([page.waitForEvent('domcontentloaded'),page.evaluate(()=>{const input=document.getElementById('control-materials.cylinder.color');input.value='#123456';input.dispatchEvent(new Event('input',{bubbles:true}));location.reload()})]);await ready()
     assert.equal((await page.evaluate(()=>window.persistenceTest.get())).materials.cylinder.color,'#123456')

@@ -13,7 +13,7 @@ Vite, vanilla JavaScript, Three.js, Web Audio, and Pitchy for microphone pitch d
 
 ## Browser scene studio
 
-Studio is closed on page load. The **Studio** button opens controls alongside the live design. Changes preview immediately; they do not turn the crank. On narrow screens the preview sits above a scrolling control panel.
+The visitor page does not render Studio. For local editing, open **http://localhost:5173/?studio=1** and use the **Studio** button to open controls alongside the live design. Production builds omit the editor UI, even with that URL parameter. Changes preview immediately; they do not turn the crank. On narrow screens the preview sits above a scrolling control panel.
 
 - **Materials:** choose one of eight part categories, or use **Pick a part in the scene**. Each category has its own color, metalness, roughness, clear coating, texture and opacity. Finish recipes apply to the selected category only. Starting looks preview a style while retaining your notes, tune and button settings; previews do not replace your stored working draft.
 - **Lighting:** main, fill and rim lights each have an enable switch, color, strength, direction, elevation and shadow switch. Studio reflections are the surrounding light reflected in metal. Control their intensity and rotation independently of direct lights. Compare cast shadows, the soft contact overlay and ambient occlusion separately.
@@ -165,7 +165,7 @@ Current agreed capture scope is microphone only, initiated by a user action and 
 
 ### Pitchy microphone trial
 
-Open **Studio → Tune**. Choose 5, 10 or 15 seconds, press **Record a melody**, and approve the browser microphone prompt if needed. Hum/whistle or play one melodic instrument; **Stop & analyze** ends early and **Cancel** discards the new capture. A song through speakers can be tried, but chords, drums and competing voices can confuse this single-pitch detector. It is not source separation or complete song transcription.
+In the local editor at **http://localhost:5173/?studio=1**, open **Studio → Tune**. Choose 5, 10 or 15 seconds, press **Record a melody**, and approve the browser microphone prompt if needed. Hum/whistle or play one melodic instrument; **Stop & analyze** ends early and **Cancel** discards the new capture. A song through speakers can be tried, but chords, drums and competing voices can confuse this single-pitch detector. It is not source separation or complete song transcription.
 
 Review detected pitches and their adapted music-box pitches. An automatically suggested whole-octave shift fits the melody to the existing C-major comb; change it with **Octave shift**. Chromatic/out-of-range notes move to the nearest available tine and are counted as adjusted. Remove stray notes; use **Preview arrangement** to hear the synthesized music-box notes at the captured timing, and press it again to stop. Preview is an explicit review player; the installed cylinder still plays only from crank/keyboard rotation. **Build this cylinder** replaces pins and resets rotation to the start. **Restore original tune** restores the original 48-pin study. Starting looks preserve an installed custom tune.
 
@@ -367,4 +367,22 @@ The 3D guide’s arc, arrowhead and idle spin now point in the playing direction
 
 Source is backed up privately at https://github.com/Ariels713/music-box on feature/initial-music-box. No site hosting/deployment is configured. Install with npm ci and run the local Vite server on port 5173. Source photos, saved studies and verification evidence are included; dependencies, build output and environment files are excluded.
 
-Studio starts closed, including after refresh, while its button remains available. The footer has a keyboard/touch-accessible Get in touch mailto link to the email Ariel provided: ariel.rodriguez@rho.co. It opens the visitor’s email app without sending anything automatically. No LinkedIn URL was supplied. The contact link can later be changed in index.html.
+Studio remains in source and is available only through the local development editor URL; it is not constructed in the visitor DOM or bundled into production. The footer has a Get in touch mailto link to **ariel.rodriguez@hey.com** and **@Ariel_Rodriguez** linking to https://x.com/Ariel_Rodriguez. Both are keyboard/touch accessible. The email link opens the visitor’s mail app with only the recipient filled in; no email is sent automatically. Contact links are in index.html.
+
+### Visitor view and retained local editor
+
+Normal localhost and production pages construct only the instrument, recording button and visitor controls. The full Studio source is preserved and loaded dynamically only on the development server with ?studio=1. Production ignores the parameter and omits editor code/CSS; no Studio button or panel is created. This is a presentation/build separation, not an authentication system.
+
+src/scene-state.js keeps saved settings, camera changes and new microphone cylinders working independently of the UI. Production bundles studies/current.json, so the approved design and existing hummed tune survive a static build; it does not call the local Save API. New visitor recordings stay in that browser’s draft. The editor uses the same draft key, so opening the local editor restores the hum and allows Save study to update the project for the next build. The existing saved melody was left unchanged; no original jazz replacement was installed.
+
+Build/19 Node tests and the visitor browser suite cover absent Studio DOM/modules, production ignoring ?studio=1, exact approved melody retained, synthetic microphone capture/reload/editor handoff, the updated email/X links, desktop/mobile layouts and no console errors. Fake audio only; no physical microphone accessed by the tests. A temporary local preview on port5174 was used to test dist; no deployment was performed.
+
+### Sound enabled and personal underside signature
+
+Sound starts enabled. No notes play on load: the first crank/key gesture unlocks Web Audio, and only subsequent physical pin crossings produce notes. The Sound on/off button now reports its enabled state through aria-pressed and toggles consistently, including its first click; muted state has a lighter visual treatment.
+
+The original underside manufacturer URL is replaced by @Ariel_Rodriguez, matching IMG_3618.HEIC’s small, centered dark sans-serif printing directly on wood. It is a transparent, rough-lit surface decal rather than a plaque; rotate beneath the base to see it. Its default visibility is on and local Studio still has the maker-mark checkbox. The approved study only changed that visibility field—its hummed melody is unchanged. The footer retains the clickable X handle and Get in touch links.
+
+Scene drafts now use music-box-scene-v1. The shared reader accepts legacy music-box-studio-v1 drafts without deleting or altering that backup, preserves the captured melody and enables the new personal signature (the old visibility preference described the manufacturer URL). The next edit writes the new key. A later explicit signature visibility choice in the new draft is respected. Node migration checks cover both cases.
+
+Build and21 Node checks pass. Browser checks verify outward-facing underside text, default-enabled sound with no autoplay, user-gesture audio unlock/voices/toggling, visitor/prod/editor separation, fake-mic recording persistence and contact links. Evidence: verification/twitter-underside.png and visitor-defaults-*.png. Audio signal/state tested; not human listening. Local preview testing is not deployment.

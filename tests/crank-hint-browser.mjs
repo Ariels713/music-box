@@ -7,7 +7,7 @@ try {
   page.on('pageerror',e=>errors.push(String(e)));page.on('console',e=>{if(e.type()==='error')errors.push(e.text())})
   await page.route('**/__musicbox/study',r=>r.fulfill({json:{settings:null}}))
   await page.route('**/src/main.js*',async r=>{const response=await r.fetch();await r.fulfill({response,body:await response.text()+`\nwindow.hintTest={ready:studio.ready,step:delta=>{crankHint.update(delta,reducedMotion.matches);dirty=true},state:()=>({motion:crankHint.state(),bounds:(()=>{crankHint.root.updateMatrixWorld(true);return new THREE.Box3().setFromObject(crankHint.root)})(),visible:crankHint.root.visible,parts:crankHint.root.children.length,physical:crankHint.root.children[0].material.isMeshStandardMaterial,radius:crankHint.root.children[0].geometry.parameters.radius,opacity:crankHint.root.children[0].material.opacity,angle:crankAngle,settings:studio.getSettings().crankArrow,position:new THREE.Vector3().setFromMatrixPosition(crankHint.root.matrix).toArray(),arc:crankHint.root.children[0].geometry.parameters.path.getLength()}),grip:()=>{const p=box.hitTarget.getWorldPosition(new THREE.Vector3()).project(camera),r=canvas.getBoundingClientRect();return {x:r.left+(p.x+1)*r.width/2,y:r.top+(1-p.y)*r.height/2}}};`})})
-  await page.goto('http://localhost:5173/');await page.waitForFunction(()=>window.hintTest);await page.evaluate(()=>window.hintTest.ready)
+  await page.goto('http://localhost:5173/?studio=1');await page.waitForFunction(()=>window.hintTest);await page.evaluate(()=>window.hintTest.ready)
   if(await page.locator('#studio-toggle').getAttribute('aria-expanded')==='true')await page.locator('#studio-toggle').click()
   const state=()=>page.evaluate(()=>window.hintTest.state())
   assert.equal((await state()).visible,true)

@@ -22,10 +22,11 @@ window.fallTest={ready:studio.ready,checkSpawn:settings=>{
 },advance:delta=>increment(PLAY_DIRECTION*delta),clear:()=>fallingNotes.clear(),step:t=>{fallingNotes.update(t);dirty=true},close:()=>studio.setOpen(false),detail:()=>{const n=fallingNotes.root.children.find(n=>n.visible);if(n)studio.setCamera({zoom:3,target:{x:n.position.x,y:.1,z:n.position.z}})},state:()=>({...fallingNotes.stats(),reduced:reducedMotion.matches,onsets:onsetCount,angle:crankAngle,camera:camera.position.toArray(),bounds:new THREE.Box3().setFromObject(box.root),particles:fallingNotes.root.children.filter(n=>n.visible).map(n=>({surfaceMin:(()=>{const mesh=n.children[0].children[0],v=new THREE.Vector3(),points=mesh.geometry.attributes.position;let min=Infinity;for(let i=0;i<points.count;i++)min=Math.min(min,v.fromBufferAttribute(points,i).applyMatrix4(mesh.matrixWorld).y);return min})(),impacts:n.userData.impacts??0,rotation:n.children[0].quaternion.toArray(),thickness:n.children[0].children[0].geometry.boundingBox.max.z-n.children[0].children[0].geometry.boundingBox.min.z,color:n.children[0].children[0].material.color.getHexString(),fiberColor:n.children[0].children[1].material.color.getHexString(),shape:n.userData.shape,position:n.position.toArray(),bounds:new THREE.Box3().setFromObject(n),roughness:n.children[0].children[0].material.roughness,sheen:n.children[0].children[0].material.sheen,fibers:n.children[0].children[1].geometry.attributes.position.count}))})};`})})
 const state=()=>page.evaluate(()=>window.fallTest.state())
 try{
- await page.goto('http://localhost:5173/');await page.waitForFunction(()=>window.fallTest);await page.evaluate(()=>window.fallTest.ready)
+ await page.goto('http://localhost:5173/?studio=1');await page.waitForFunction(()=>window.fallTest);await page.evaluate(()=>window.fallTest.ready)
  assert.equal((await state()).count,0)
  await page.waitForTimeout(150);assert.equal((await state()).count,0)
  await page.getByRole('button',{name:'Sound on',exact:true}).click()
+ await page.getByRole('button',{name:'Sound off',exact:true}).click()
  await page.evaluate(()=>window.fallTest.advance(Math.PI*2))
  let result=await state();assert.equal(result.count,result.onsets);assert.equal(result.count,5)
  assert.deepEqual([...new Set(result.particles.map(p=>p.shape))].sort(),['eighth','paired','quarter'])

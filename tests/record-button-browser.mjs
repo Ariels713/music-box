@@ -20,7 +20,7 @@ await page.route('**/src/main.js*',async route=>{const response=await route.fetc
 const snapshot=()=>page.evaluate(()=>window.buttonTest.state())
 const press=async()=>{const p=await page.evaluate(()=>window.buttonTest.point());await page.mouse.move(p.x,p.y);await page.mouse.down()}
 try {
- await page.goto('http://localhost:5173/',{waitUntil:'networkidle'});await page.waitForFunction(()=>window.buttonTest);await page.evaluate(()=>window.buttonTest.ready);if(await page.locator('#studio-toggle').getAttribute('aria-expanded')==='false')await page.locator('#studio-toggle').click()
+ await page.goto('http://localhost:5173/?studio=1',{waitUntil:'networkidle'});await page.waitForFunction(()=>window.buttonTest);await page.evaluate(()=>window.buttonTest.ready);if(await page.locator('#studio-toggle').getAttribute('aria-expanded')==='false')await page.locator('#studio-toggle').click()
  await page.locator('#studio-import').setInputFiles('studies/ariel-default-song.json');await page.waitForFunction(()=>document.querySelector('#studio-message').textContent.startsWith('Imported'))
  await page.getByRole('tab',{name:'Compose',exact:true}).click()
  await page.locator('[id="control-recordButton.position.x"]').evaluate(el=>{el.value=-1;el.dispatchEvent(new Event('input',{bubbles:true}))})

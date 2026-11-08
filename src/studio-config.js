@@ -25,7 +25,7 @@ export const DEFAULT_SETTINGS = {
     rim: light('#e6f8ff', 2.2, 205, 45),
     environment: 1, environmentRotation: 20, ambient: 0.3,
   },
-  scene: { background: '#f5f3ee', exposure: 1, toneMapping: 'aces', shadows: true, shadowOpacity: 0.3, shadowSoftness: 5, contactOpacity: 0.7, ao: true, aoRadius: 0.09, showMark: false },
+  scene: { background: '#f5f3ee', exposure: 1, toneMapping: 'aces', shadows: true, shadowOpacity: 0.3, shadowSoftness: 5, contactOpacity: 0.7, ao: true, aoRadius: 0.09, showMark: true },
   camera: {"projection":"orthographic","azimuth":-47.770876421923504,"elevation":33.82652533609099,"distance":5.400000000000002,"zoom":1,"fov":38,"target":{"x":0.05999999999999999,"y":0.42000000000000004,"z":0.11999999999999998}},
   geometry: { ...DEFAULT_GEOMETRY },
   composition: { explode: 0, rotation: 0, offsets: Object.fromEntries(Object.keys(GROUPS).map(key => [key, { x: 0, y: 0, z: 0 }])) },

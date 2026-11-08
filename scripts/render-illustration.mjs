@@ -67,7 +67,7 @@ window.illustrationReady = true;
 ` })
 })
 try {
-  await page.goto('http://localhost:5173/')
+  await page.goto('http://localhost:5173/?studio=1')
   await page.waitForFunction(() => window.illustrationReady === true)
   await page.screenshot({ path: 'verification/product-illustration.png' })
   if (errors.length) throw new Error(errors.join('\n'))

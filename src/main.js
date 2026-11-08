@@ -13,7 +13,7 @@ import { MusicAudio } from './audio.js'
 import { createCrankHint } from './crank-hint.js'
 import { createFallingNotes } from './falling-notes.js'
 import { createRecordButton } from './record-button.js'
-import { createStudio } from './studio.js'
+import { createSceneState } from './scene-state.js'
 import { DEFAULT_SETTINGS, clone } from './studio-config.js'
 
 const app = document.querySelector('#app')
@@ -134,6 +134,7 @@ const intersection = new THREE.Vector3()
 const abort = new AbortController()
 const listen = (target, type, callback, options = {}) => target.addEventListener(type, callback, { ...options, signal: abort.signal })
 let studio = null
+let sceneState = null
 let applying = false
 let currentSettings = clone(DEFAULT_SETTINGS)
 const fallingNotes=createFallingNotes();scene.add(fallingNotes.root)
@@ -142,7 +143,7 @@ const texturePool = new Map()
 rememberPartPositions()
 controls.addEventListener('change', () => {
   dirty = true
-  if (!applying && studio) studio.syncCamera(cameraSnapshot())
+  if (!applying && sceneState) sceneState.syncCamera(cameraSnapshot())
 })
 
 function increment(delta) {
@@ -211,7 +212,7 @@ listen(canvas, 'pointerdown', event => {
   if (!raycaster.intersectObject(box.hitTarget).length) return
   if (isExploded()) {
     event.stopImmediatePropagation(); event.preventDefault()
-    studio.assemble()
+    sceneState.assemble()
     return
   }
   // Capture phase runs before OrbitControls' pointer listener.
@@ -259,7 +260,7 @@ listen(canvas, 'keydown', event => {
   if (!['ArrowRight', 'ArrowLeft', 'ArrowUp', 'ArrowDown'].includes(event.key)) return
   event.preventDefault()
   if (activePointer !== null || event.repeat) return
-  if (isExploded()) studio.assemble()
+  if (isExploded()) sceneState.assemble()
   unlock()
   increment(PLAY_DIRECTION * (['ArrowRight', 'ArrowUp'].includes(event.key) ? Math.PI / 6 : -Math.PI / 6))
 })
@@ -267,15 +268,15 @@ listen(canvas,'keyup',event=>{if([' ','Enter'].includes(event.key)&&keyboardReco
 listen(canvas,'blur',()=>{if(keyboardRecording){keyboardRecording=false;recordButton?.cancel()}})
 listen(document.querySelector('#sound'), 'click', async () => {
   const button = document.querySelector('#sound')
-  if (!audio.context) await unlock()
-  else audio.muted = !audio.muted
-  button.setAttribute('aria-pressed', String(audio.muted))
+  audio.muted = !audio.muted
+  if(!audio.muted)await unlock()
+  button.setAttribute('aria-pressed', String(!audio.muted))
   button.textContent = audio.muted ? 'Sound off' : 'Sound on'
   status.textContent = audio.muted ? 'Sound off' : 'Sound ready · turn to play'
 })
 function resetView() {
   stop()
-  studio?.setCamera(clone(DEFAULT_SETTINGS.camera))
+  sceneState?.setCamera(clone(DEFAULT_SETTINGS.camera))
 }
 listen(document.querySelector('#reset'), 'click', resetView)
 function resize() {
@@ -298,23 +299,31 @@ function resize() {
 }
 listen(reducedMotion,'change',()=>{fallingNotes.clear();dirty=true})
 listen(window, 'resize', resize)
-studio = createStudio({
-  apply: applySettings,
-  capture: captureScene,
-  pick: active => canvas.classList.toggle('picking', active),
-  frameModel,
-  resetCamera: resetView,
-  previewCrankArrow:active=>{crankHint.preview(active);dirty=true},
-  clearFallingNotes:()=>{fallingNotes.clear();dirty=true},
-  recordingChanged: recordingChanged,
-  canRecord:()=>!capturing&&(!recordButton||recordButton.state()==='idle'),
-})
+if(import.meta.env.DEV&&new URLSearchParams(location.search).get('studio')==='1') {
+  const toggle=document.createElement('button')
+  toggle.id='studio-toggle';toggle.textContent='Studio';toggle.setAttribute('aria-controls','studio-panel');toggle.setAttribute('aria-expanded','false')
+  document.querySelector('.actions').prepend(toggle)
+  const {createStudio}=await import('./studio.js')
+  studio = createStudio({
+    apply: applySettings,
+    capture: captureScene,
+    pick: active => canvas.classList.toggle('picking', active),
+    frameModel,
+    resetCamera: resetView,
+    previewCrankArrow:active=>{crankHint.preview(active);dirty=true},
+    clearFallingNotes:()=>{fallingNotes.clear();dirty=true},
+    recordingChanged: recordingChanged,
+    canRecord:()=>!capturing&&(!recordButton||recordButton.state()==='idle'),
+  })
+  sceneState=studio
+} else sceneState=createSceneState({apply:applySettings,message:text=>{status.textContent=text}})
+
 recordButton=createRecordButton({
   changed:()=>{dirty=true}, recordingChanged,
-  canStart:()=>!capturing&&!studio.tuneBusy(),
+  canStart:()=>!capturing&&!studio?.tuneBusy(),
   currentColor:()=>currentSettings.materials.cylinder.color,
   message:text=>{status.textContent=text},
-  install:(melody,color)=>{const next=studio.getSettings();next.melody=melody;next.materials.cylinder.color=color;next.composition.explode=0;for(const key of Object.keys(next.composition.offsets))next.composition.offsets[key]={x:0,y:0,z:0};studio.setSettings(next)},
+  install:(melody,color)=>{const next=sceneState.getSettings();next.melody=melody;next.materials.cylinder.color=color;next.composition.explode=0;for(const key of Object.keys(next.composition.offsets))next.composition.offsets[key]={x:0,y:0,z:0};sceneState.setSettings(next)},
 })
 scene.add(recordButton.root)
 recordButton.configure(currentSettings.recordButton)
@@ -340,7 +349,7 @@ renderer.setAnimationLoop(() => {
   composer.render()
 })
 if (import.meta.hot) import.meta.hot.dispose(() => {
-  stop(); crankHint.dispose(); fallingNotes.dispose(); recordButton?.dispose(); studio?.dispose(); abort.abort(); renderer.setAnimationLoop(null); controls.dispose(); audio.dispose()
+  stop(); crankHint.dispose(); fallingNotes.dispose(); recordButton?.dispose(); sceneState?.dispose?.();document.querySelector('#studio-toggle')?.remove(); abort.abort(); renderer.setAnimationLoop(null); controls.dispose(); audio.dispose()
   disposeObject(scene)
   texturePool.forEach(texture => texture.dispose())
   environment.dispose(); occlusion.dispose(); outputPass.dispose(); composer.dispose(); renderer.dispose(); canvas.remove()
@@ -466,7 +475,7 @@ function frameModel() {
   const bounds = new THREE.Box3().setFromObject(box.root)
   const center = bounds.getCenter(new THREE.Vector3()), size = bounds.getSize(new THREE.Vector3())
   const diameter = Math.max(size.x, size.y, size.z)
-  studio.setCamera({ target: { x: center.x, y: center.y, z: center.z }, zoom: Math.min(2, Math.max(.4, 2.65 / diameter)), distance: Math.min(10, Math.max(2.6, diameter * 2.5)) })
+  sceneState.setCamera({ target: { x: center.x, y: center.y, z: center.z }, zoom: Math.min(2, Math.max(.4, 2.65 / diameter)), distance: Math.min(10, Math.max(2.6, diameter * 2.5)) })
 }
 function surfaceTexture(part, type) {
   const key = `${part}:${type}`

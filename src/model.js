@@ -199,13 +199,16 @@ export function createMusicBox(shape = DEFAULT_GEOMETRY, pins = PINS) {
   const labelCanvas = document.createElement('canvas')
   labelCanvas.width = 512; labelCanvas.height = 128
   const ctx = labelCanvas.getContext('2d')
-  ctx.font = 'bold 46px Arial'; ctx.textAlign = 'center'; ctx.fillStyle = '#7d695b'
-  ctx.fillText('www.fridolin.de', 256, 80)
+  ctx.font = 'bold 46px Arial'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillStyle = '#35291f'
+  ctx.fillText('@Ariel_Rodriguez', 256, 64)
   const labelTexture = new THREE.CanvasTexture(labelCanvas)
   labelTexture.colorSpace = THREE.SRGBColorSpace
-  const label = mesh(new THREE.PlaneGeometry(0.65, 0.1625), new THREE.MeshBasicMaterial({ map: labelTexture, transparent: true, depthWrite: false, side: THREE.DoubleSide }), base, 0, -0.002, 0)
+  const label = mesh(new THREE.PlaneGeometry(0.9, 0.225), new THREE.MeshStandardMaterial({ map: labelTexture, transparent: true, depthWrite: false, roughness: .95, metalness: 0, side: THREE.FrontSide }), base, 0, -0.002, 0)
   label.rotation.x = Math.PI / 2
   label.name = 'maker-mark'
+  label.userData.signature = '@Ariel_Rodriguez'
+  label.userData.opticalGlow = true
+  label.castShadow = false
   frameAssembly.position.y = lift; comb.position.y = lift
   cylinder.position.y += lift; crank.position.y += lift
   const materialCache = new Map()

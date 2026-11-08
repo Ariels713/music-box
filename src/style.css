@@ -83,3 +83,8 @@ canvas.over-record { cursor: pointer; }
 .contact-link:focus-visible { outline: 2px solid var(--rose); outline-offset: 3px; border-radius: 3px; }
 @media(hover:hover) { .contact-link:hover { text-decoration-color: currentColor; } }
 @media(max-width:580px) { .footer-aside { align-items: flex-start; } }
+
+.contact-links { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; column-gap: 18px; }
+@media(max-width:580px) { .contact-links { justify-content: flex-start; column-gap: 16px; } }
+
+#sound[aria-pressed="false"] { background: #f6f5f8; color: var(--ink); }

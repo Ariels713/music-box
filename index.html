@@ -10,12 +10,12 @@
   <body>
     <header>
       <div><p class="eyebrow">A small study in sound &amp; motion</p><h1>Music box</h1></div>
-      <div class="actions"><button id="studio-toggle" aria-controls="studio-panel" aria-expanded="false">Studio</button><button id="sound" aria-pressed="false">Sound on</button><button id="reset" aria-label="Reset view"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 10a8 8 0 1 1 1 6M4 4v6h6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Reset view</span></button></div>
+      <div class="actions"><button id="sound" aria-pressed="true">Sound on</button><button id="reset" aria-label="Reset view"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 10a8 8 0 1 1 1 6M4 4v6h6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Reset view</span></button></div>
     </header>
     <main id="app"></main>
     <footer>
       <div id="instructions"><p class="lead">A melody, in your hands.</p><p>Grab the handle and turn in circles.<br>Drag elsewhere to look around.</p><p class="note">Focus the box · Right/Up play · Left/Down rewind silently</p></div>
-      <div class="footer-aside"><p id="status" role="status">Sound starts with your first turn.</p><a class="contact-link" href="mailto:ariel.rodriguez@rho.co" aria-label="Email Ariel Rodriguez">Get in touch <span aria-hidden="true">↗</span></a></div>
+      <div class="footer-aside"><p id="status" role="status">Sound starts with your first turn.</p><nav class="contact-links" aria-label="Contact Ariel"><a class="contact-link" href="mailto:ariel.rodriguez@hey.com" aria-label="Email Ariel Rodriguez">Get in touch <span aria-hidden="true">↗</span></a><a class="contact-link" href="https://x.com/Ariel_Rodriguez" target="_blank" rel="noopener noreferrer" aria-label="@Ariel_Rodriguez on X (opens in a new tab)">@Ariel_Rodriguez</a></nav></div>
     </footer>
     <script type="module" src="/src/main.js"></script>
   </body>

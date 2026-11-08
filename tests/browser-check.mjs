@@ -45,7 +45,7 @@ const state = () => page.evaluate(() => window.testBox.snapshot())
 const point = a => page.evaluate(a => window.testBox.project(a), a)
 const move = async a => { const p = await point(a); await page.mouse.move(p.x, p.y) }
 try {
-  await page.goto('http://localhost:5173/')
+  await page.goto('http://localhost:5173/?studio=1')
   await page.waitForFunction(() => !!window.testBox)
   await page.evaluate(() => window.testBox.ready)
   let before = await state()

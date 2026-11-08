@@ -3,7 +3,7 @@ import { MAX_FALLING_NOTES } from './falling-notes.js'
 import { createTuneStudio } from './tune-studio.js'
 import { DEFAULT_SETTINGS, PARTS, GROUPS, PRESETS, GEOMETRY_BOUNDS, defaultButtonPosition, clone, validateSettings, makePreset } from './studio-config.js'
 
-const DRAFT_KEY = 'music-box-studio-v1'
+import { DRAFT_KEY, readSceneDraft } from './scene-storage.js'
 const FINISHES = {
   'Satin metal': { metalness: 0.85, roughness: 0.32, clearcoat: 0, texture: 'brushed' },
   'Polished metal': { metalness: 0.98, roughness: 0.12, clearcoat: 0, texture: 'none' },
@@ -431,8 +431,8 @@ export function createStudio({ apply, capture, pick, frameModel, resetCamera, re
       }
     } catch(error){loadError=error.message}
     try {
-      const stored=localStorage.getItem(DRAFT_KEY)
-      if(stored){draft=JSON.parse(stored);draft.settings=validateSettings(draft.settings)}
+      draft=readSceneDraft()
+      if(draft?.settings)draft.settings=validateSettings(draft.settings)
     } catch(error){loadError=error.message;draft=null}
     if (draft?.settings && (!savedStudy || draft.updatedAt > (Date.parse(project?.savedAt)||0))) commit(draft.settings, 'Restored this browser’s draft.')
     else if(savedStudy){commit(clone(savedStudy), 'Loaded your saved setup.');preset.value='saved'}

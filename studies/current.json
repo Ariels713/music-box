@@ -260,7 +260,7 @@
       "contactOpacity": 0.7,
       "ao": true,
       "aoRadius": 0.09,
-      "showMark": false
+      "showMark": true
     },
     "camera": {
       "projection": "orthographic",
