@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import { DEFAULT_SETTINGS, clone } from './studio-config.js'
+import { createRecordLabel } from './record-label.js'
 import { MicrophoneCapture } from './microphone.js'
 import { transcribe } from './transcribe.js'
 import { suggestTranspose } from './tune.js'
@@ -39,10 +40,11 @@ export function createRecordButton({ changed, recordingChanged, install, current
   const uplight=new THREE.PointLight(settings.idleColor,.03,.65,2);uplight.position.set(0,.028,.31);root.add(uplight)
   root.traverse(item=>{if(item.isMesh){item.castShadow=!item.userData.opticalGlow;item.receiveShadow=true}})
   base.castShadow=false;lamp.castShadow=false
+  const instruction=createRecordLabel();root.add(instruction)
   const capture=new MicrophoneCapture()
   let state='idle',held=false,generation=0,press=0,hover=false,disposed=false
   const accessible=document.createElement('button');accessible.id='record-sound';accessible.type='button';accessible.className='record-accessible';accessible.textContent='Hold to record a tune';accessible.setAttribute('aria-label','Hold Space or Enter to record a melody. Release to create a cylinder. Maximum 10 seconds.');accessible.setAttribute('aria-pressed','false');document.body.append(accessible)
-  const hint=document.createElement('p');hint.className='record-hint';hint.id='record-hint';hint.textContent='Hold ♪ and hum · release to create';document.body.append(hint);message(hint.textContent)
+  const hint=document.createElement('p');hint.className='record-hint';hint.id='record-hint';hint.textContent='Press and hold ♪, then hum · release to create';document.body.append(hint);accessible.setAttribute('aria-describedby',hint.id);message(hint.textContent)
   function updateRecessLight() {
     const color=held?settings.recordingColor:settings.idleColor
     lampMaterial.color.set(color);lampMaterial.emissive.set(color);lampMaterial.emissiveIntensity=3*settings.glow
@@ -101,6 +103,9 @@ export function createRecordButton({ changed, recordingChanged, install, current
       uplight.position.set(settings.lightPosition.x,settings.lightPosition.y,settings.lightPosition.z);uplight.distance=settings.lightRange
       wash.position.set(settings.lightPosition.x,.008,settings.lightPosition.z-.06);wash.scale.set(settings.washWidth/.35,settings.washDepth/.22,1)
       root.rotation.y=THREE.MathUtils.degToRad(settings.rotation);root.scale.setScalar(settings.scale)
+      instruction.userData.configure(settings.lettering)
+      instruction.position.set(settings.baseOffset.x+settings.lettering.x,(.0015-settings.position.y)/settings.scale,settings.baseOffset.z+settings.lettering.z)
+      instruction.scale.setScalar(Math.max(settings.baseWidth,settings.baseDepth)/.52)
       surface.metalness=settings.metalness;surface.roughness=settings.roughness
       bezel.material.color.set(settings.bezelColor);base.material.color.set(settings.wellColor);base.material.metalness=settings.baseMetalness;base.material.roughness=settings.baseRoughness
       ink.color.set(settings.color).multiplyScalar(.9);ink.metalness=settings.metalness;ink.roughness=Math.max(.25,settings.roughness)

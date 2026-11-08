@@ -6,56 +6,116 @@
     "melody": {
       "notes": [
         {
-          "midi": 53,
-          "start": 0.3893333333333333,
+          "midi": 43,
+          "start": 0.528,
+          "duration": 0.10666666666666669
+        },
+        {
+          "midi": 42,
+          "start": 0.6346666666666667,
           "duration": 0.11199999999999999
         },
         {
-          "midi": 54,
-          "start": 1.9413333333333334,
-          "duration": 0.31466666666666643
-        },
-        {
-          "midi": 52,
-          "start": 2.6506666666666665,
-          "duration": 0.13866666666666694
-        },
-        {
-          "midi": 54,
-          "start": 2.992,
-          "duration": 0.14933333333333332
-        },
-        {
-          "midi": 50,
-          "start": 3.1413333333333333,
-          "duration": 0.18133333333333335
-        },
-        {
-          "midi": 52,
-          "start": 3.6266666666666665,
-          "duration": 0.202666666666667
-        },
-        {
-          "midi": 47,
-          "start": 4.149333333333334,
-          "duration": 0.10133333333333283
+          "midi": 44,
+          "start": 0.8906666666666667,
+          "duration": 0.11199999999999988
         },
         {
           "midi": 46,
-          "start": 4.250666666666667,
-          "duration": 0.10133333333333372
+          "start": 1.0613333333333332,
+          "duration": 0.2240000000000002
+        },
+        {
+          "midi": 48,
+          "start": 1.3706666666666667,
+          "duration": 0.13866666666666672
+        },
+        {
+          "midi": 49,
+          "start": 1.5093333333333334,
+          "duration": 0.22933333333333317
+        },
+        {
+          "midi": 54,
+          "start": 2.464,
+          "duration": 0.3039999999999998
+        },
+        {
+          "midi": 55,
+          "start": 2.768,
+          "duration": 0.2293333333333334
+        },
+        {
+          "midi": 51,
+          "start": 2.997333333333333,
+          "duration": 0.23466666666666702
+        },
+        {
+          "midi": 53,
+          "start": 3.232,
+          "duration": 0.20799999999999974
+        },
+        {
+          "midi": 49,
+          "start": 3.525333333333333,
+          "duration": 0.2240000000000002
+        },
+        {
+          "midi": 51,
+          "start": 3.7493333333333334,
+          "duration": 0.1386666666666665
+        },
+        {
+          "midi": 46,
+          "start": 4.042666666666666,
+          "duration": 0.5920000000000005
         },
         {
           "midi": 47,
-          "start": 4.597333333333333,
-          "duration": 0.2826666666666666
+          "start": 5.242666666666667,
+          "duration": 0.18666666666666654
+        },
+        {
+          "midi": 46,
+          "start": 5.429333333333333,
+          "duration": 0.11733333333333373
+        },
+        {
+          "midi": 47,
+          "start": 5.546666666666667,
+          "duration": 0.23466666666666658
+        },
+        {
+          "midi": 47,
+          "start": 5.8453333333333335,
+          "duration": 1.8719999999999999
+        },
+        {
+          "midi": 48,
+          "start": 7.946666666666666,
+          "duration": 0.13333333333333375
+        },
+        {
+          "midi": 48,
+          "start": 8.357333333333333,
+          "duration": 0.1280000000000001
+        },
+        {
+          "midi": 48,
+          "start": 8.784,
+          "duration": 0.14933333333333287
+        },
+        {
+          "midi": 46,
+          "start": 9.184,
+          "duration": 0.2506666666666675
         }
       ],
       "transpose": 36
     },
     "crankArrow": {
       "enabled": true,
-      "idleSpeed": 18,
+      "idleSpeed": 45,
       "fallDuration": 1.1,
       "position": {
         "x": 0.01,
@@ -71,7 +131,7 @@
       "radius": 0.21,
       "thickness": 0.013,
       "arcLength": 179,
-      "startAngle": -36,
+      "startAngle": -11,
       "linecap": "round",
       "head": "triangle",
       "headLength": 0.05,
@@ -102,8 +162,22 @@
       "bounce": 0.12
     },
     "recordButton": {
+      "lettering": {
+        "enabled": true,
+        "upperText": "PRESS & HOLD",
+        "lowerText": "TO RECORD YOUR OWN TUNE",
+        "size": 0.71,
+        "spacing": 0.016,
+        "upperRadius": 0.32,
+        "lowerRadius": 0.39,
+        "stretch": 1.5,
+        "rotation": -7,
+        "x": 0,
+        "z": 0,
+        "color": "#35394a"
+      },
       "position": {
-        "x": -1.44,
+        "x": -1.48,
         "y": 0,
         "z": -0.16
       },
@@ -264,9 +338,9 @@
     },
     "camera": {
       "projection": "orthographic",
-      "azimuth": -29.130520052352576,
-      "elevation": 12.231288779730946,
-      "distance": 5.4000000000000385,
+      "azimuth": -55.9044402792141,
+      "elevation": 42.66481385729079,
+      "distance": 5.400000000000032,
       "zoom": 1,
       "fov": 38,
       "target": {
@@ -317,6 +391,6 @@
       }
     }
   },
-  "savedAt": "2026-11-08T19:30:48.064Z",
-  "preview": "studies/2026-11-08T19-30-48-064Z-860206ff.png"
+  "savedAt": "2026-11-08T21:59:55.097Z",
+  "preview": "studies/2026-11-08T21-59-55-097Z-a8b5e62c.png"
 }

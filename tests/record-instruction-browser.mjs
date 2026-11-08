@@ -1,0 +1,25 @@
+import assert from 'node:assert/strict'
+const {chromium}=await import(process.env.PLAYWRIGHT_MODULE||'playwright')
+const browser=await chromium.launch({headless:true}),page=await browser.newPage({viewport:{width:1440,height:1000},reducedMotion:'reduce'}),errors=[]
+page.on('pageerror',e=>errors.push(String(e)));page.on('console',e=>{if(e.type()==='error')errors.push(e.text())})
+await page.route('**/src/main.js*',async r=>{const response=await r.fetch();await r.fulfill({response,body:await response.text()+`\nwindow.instructionTest={ready:sceneState.ready,inspect:()=>{recordButton.root.updateMatrixWorld(true);const text=recordButton.root.getObjectByName('record-floor-instruction'),p=text.getWorldPosition(new THREE.Vector3());raycaster.setFromCamera(p.clone().project(camera),camera);return {flat:text.geometry.attributes.position.array.every((value,i)=>i%3!==2||Math.abs(value)<1e-7),text:text.userData.instruction,layout:text.userData.layout,material:text.material.type,normal:new THREE.Vector3(0,0,1).transformDirection(text.matrixWorld).toArray(),position:p.toArray(),occlusionExcluded:text.userData.opticalGlow,castsShadow:text.castShadow,hittable:raycaster.intersectObject(recordButton.root,true).some(hit=>hit.object===text)}} ,move:()=>{const next=sceneState.getSettings();next.recordButton.position.y=.2;next.recordButton.scale=1.4;next.recordButton.rotation=35;sceneState.setSettings(next)}};`})})
+try{
+ await page.goto('http://localhost:5173/');await page.waitForFunction(()=>window.instructionTest);await page.evaluate(()=>window.instructionTest.ready)
+ const initial=await page.evaluate(()=>window.instructionTest.inspect())
+ assert.equal(initial.text,'Press and hold to record your own tune');assert.equal(initial.layout,'circular');assert.equal(initial.flat,true);assert.equal(initial.material,'MeshBasicMaterial');assert.ok(initial.normal[1]>.99)
+ assert.ok(Math.abs(initial.position[1]-.0015)<1e-6);assert.equal(initial.hittable,false);assert.equal(initial.occlusionExcluded,true);assert.equal(initial.castsShadow,false)
+ assert.match(await page.locator('#status').textContent(),/Press and hold/)
+ await page.screenshot({path:'verification/record-floor-instruction-desktop.png'})
+ await page.setViewportSize({width:390,height:844});await page.screenshot({path:'verification/record-floor-instruction-mobile.png'})
+ assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth))
+ await page.evaluate(()=>window.instructionTest.move());assert.ok(Math.abs((await page.evaluate(()=>window.instructionTest.inspect())).position[1]-.0015)<1e-6)
+ await page.goto('http://localhost:5173/?studio=1&edit=lettering')
+ await page.waitForSelector('#studio-panel:not([hidden])')
+ const upper=page.getByLabel('Upper words',{exact:true}),lower=page.getByLabel('Lower words',{exact:true})
+ await upper.fill('HELLO WORLD!');await lower.fill('HUM A TUNE?')
+ await page.reload();await page.waitForSelector('#studio-panel:not([hidden])')
+ assert.equal(await upper.inputValue(),'HELLO WORLD!');assert.equal(await lower.inputValue(),'HUM A TUNE?')
+ await upper.fill('');await lower.fill('');await upper.fill('PRESS & HOLD');await lower.fill('TO RECORD YOUR OWN TUNE')
+ await page.setViewportSize({width:1440,height:1000});await page.screenshot({path:'verification/record-lettering-controls.png'})
+ assert.deepEqual(errors,[]);console.log('Floor instruction faces up, stays grounded after placement/scale changes, cannot intercept input; desktop/mobile and console checks pass.')
+}finally{await page.unrouteAll({behavior:'ignoreErrors'});await browser.close()}

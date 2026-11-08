@@ -12,7 +12,7 @@ export const DEFAULT_SETTINGS = {
   version: 1, name: 'Satin brass & steel', notes: '', melody: null,
   crankArrow: {enabled:true,idleSpeed:18,fallDuration:1.1,position:{x:0,y:0,z:.35},rotation:{x:0,y:0,z:0},scale:1,radius:.19,thickness:.008,arcLength:288,startAngle:-72,linecap:'round',head:'triangle',headLength:.05,headWidth:.045,depth:.012,style:'satin',color:'#506f77',opacity:1},
   fallingNotes: {enabled:true,shape:'mixed',colorMode:'palette',sheen:1,fiberBrightness:.28,singleColor:'#df9b87',palette:['#df9b87','#a8bda1','#b5a2c7','#d5bd79','#87b7be','#ce9fb3'],size:1,speed:1,drift:.16,bounce:.12},
-  recordButton: {"position":{"x":-1.44,"y":0,"z":-0.16},"rotation":0,"scale":1,"color":"#e4e2dd","bezelColor":"#d5d4d0","metalness":0.17,"roughness":0,"idleColor":"#ff0011","recordingColor":"#177825","glow":0.45,"baseWidth":0.5,"wellColor":"#99999b","baseMetalness":0.12,"baseRoughness":0.6,"baseDepth":0.5,"wellDepth":0.09,"restHeight":0.018,"pressDepth":0.04,"baseOffset":{"x":0,"y":0,"z":0},"lightPosition":{"x":-0.05,"y":0.02,"z":0.31},"lightPower":1.59,"lightRange":0.7,"washWidth":0.35,"washDepth":0.22},
+  recordButton: {lettering: {enabled:true,upperText:"PRESS & HOLD",lowerText:"TO RECORD YOUR OWN TUNE",size:1,spacing:.008,upperRadius:.34,lowerRadius:.43,stretch:2,rotation:0,x:0,z:0,color:"#35394a"},"position":{"x":-1.44,"y":0,"z":-0.16},"rotation":0,"scale":1,"color":"#e4e2dd","bezelColor":"#d5d4d0","metalness":0.17,"roughness":0,"idleColor":"#ff0011","recordingColor":"#177825","glow":0.45,"baseWidth":0.5,"wellColor":"#99999b","baseMetalness":0.12,"baseRoughness":0.6,"baseDepth":0.5,"wellDepth":0.09,"restHeight":0.018,"pressDepth":0.04,"baseOffset":{"x":0,"y":0,"z":0},"lightPosition":{"x":-0.05,"y":0.02,"z":0.31},"lightPower":1.59,"lightRange":0.7,"washWidth":0.35,"washDepth":0.22},
   materials: {
     cylinder: material('#ac6b51', 0.9, 0.29, 'brushed'), comb: material('#aebac1', 0.94, 0.22, 'brushed'),
     frame: material('#849399', 0.74, 0.38), gears: material('#303a42', 0.12, 0.56),
@@ -125,6 +125,14 @@ export function validateSettings(raw) {
     out.recordButton.baseOffset[axis]=finite(button.baseOffset?.[axis], d.recordButton.baseOffset[axis], -.3, .3, `Button base ${axis}`)
     out.recordButton.lightPosition[axis]=finite(button.lightPosition?.[axis], d.recordButton.lightPosition[axis], axis==='y' ? -.1 : -1, axis==='y' ? .5 : 1, `Button light ${axis}`)
   }
+  const lettering=button.lettering??{}, defaults=d.recordButton.lettering
+  out.recordButton.lettering.enabled=bool(lettering.enabled,defaults.enabled,'Button lettering')
+  out.recordButton.lettering.color=color(lettering.color,defaults.color,'Lettering color')
+  for(const key of ['upperText','lowerText']) {
+    if(lettering[key]!==undefined&&typeof lettering[key]!=='string')throw new Error('Button lettering must be text.')
+    out.recordButton.lettering[key]=(lettering[key]??defaults[key]).slice(0,48)
+  }
+  for(const [key,min,max] of [['size',.4,2],['spacing',0,.03],['upperRadius',.26,.8],['lowerRadius',.26,.8],['stretch',1,3],['rotation',-180,180],['x',-.6,.6],['z',-.6,.6]])out.recordButton.lettering[key]=finite(lettering[key],defaults[key],min,max,`Lettering ${key}`)
   return out
 }
 export function makePreset(name) {

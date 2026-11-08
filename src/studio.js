@@ -155,6 +155,13 @@ export function createStudio({ apply, capture, pick, frameModel, resetCamera, re
     const input = select(parent, label, options, value => change(path, value), `control-${path}`)
     bindings.push({ input, path }); return input
   }
+  function textInput(parent,label,path) {
+    const id=`control-${path}`,row=el('div',{class:'studio-field'})
+    const input=el('input',{type:'text',id,maxlength:48,spellcheck:'false'})
+    row.append(el('label',{for:id},label),input);parent.append(row)
+    bindings.push({input,path,type:'text'})
+    input.addEventListener('input',()=>change(path,input.value))
+  }
   function range(parent, label, path, min, max, step = 0.01, hint) {
     const row = el('div', { class: 'studio-field studio-range' }), id = `control-${path}`
     const top = el('div', { class: 'studio-range-label' })
@@ -287,6 +294,15 @@ export function createStudio({ apply, capture, pick, frameModel, resetCamera, re
   color(recordControls, 'Rim light · idle', 'recordButton.idleColor')
   color(recordControls, 'Rim light · recording', 'recordButton.recordingColor')
   range(recordControls, 'Rim light brightness', 'recordButton.glow', 0, 3, .05, 'Controls the circular rim light and surrounding light spill. The note stays unlit.')
+  const letteringControls=el('details',{class:'studio-section'})
+  letteringControls.append(el('summary',{},'Button lettering'))
+  textNote(letteringControls,'Flat lettering on the floor. Edit either arc; changes preview live and are saved in this browser.')
+  checkbox(letteringControls,'Show lettering','recordButton.lettering.enabled')
+  textInput(letteringControls,'Upper words','recordButton.lettering.upperText')
+  textInput(letteringControls,'Lower words','recordButton.lettering.lowerText')
+  color(letteringControls,'Lettering color','recordButton.lettering.color')
+  for(const [key,label,min,max,step] of [['size','Letter size',.4,2,.01],['spacing','Letter spacing',0,.03,.001],['upperRadius','Upper arc radius',.26,.8,.01],['lowerRadius','Lower arc radius',.26,.8,.01],['stretch','Letter height',1,3,.05],['rotation','Lettering rotation',-180,180,1],['x','Lettering X',-.6,.6,.01],['z','Lettering Z',-.6,.6,.01]])range(letteringControls,label,`recordButton.lettering.${key}`,min,max,step)
+  recordControls.querySelector('summary').after(letteringControls)
   panels.composition.append(recordControls)
   arrowControls=el('details',{class:'studio-section'});arrowControls.append(el('summary',{},'Crank arrow'))
   textNote(arrowControls,'The arrow stays visible while this section is open, even after you have played. Close it or Studio to return to its idle spin or landed position.')
@@ -441,6 +457,7 @@ export function createStudio({ apply, capture, pick, frameModel, resetCamera, re
 
   return {
     ready, tuneBusy:()=>tuneStudio.isBusy(), getSettings: () => clone(settings), setSettings: next => commit(next), selectPart,
+    openLettering(){setOpen(true);showTab('composition');recordControls.open=true;letteringControls.open=true;letteringControls.scrollIntoView({block:'start'})},
     setOpen, assemble, isPicking: () => picking,
     syncCamera(camera) { settings.camera = { ...settings.camera, ...camera }; syncBindings(); persistDraft() },
     setCamera(camera) { const next = clone(settings); Object.assign(next.camera, camera); commit(next) },

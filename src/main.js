@@ -316,6 +316,7 @@ if(import.meta.env.DEV&&new URLSearchParams(location.search).get('studio')==='1'
     canRecord:()=>!capturing&&(!recordButton||recordButton.state()==='idle'),
   })
   sceneState=studio
+  if(new URLSearchParams(location.search).get('edit')==='lettering')studio.ready.then(()=>studio.openLettering())
 } else sceneState=createSceneState({apply:applySettings,message:text=>{status.textContent=text}})
 
 recordButton=createRecordButton({
