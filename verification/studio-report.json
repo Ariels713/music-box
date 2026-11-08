@@ -1,0 +1,10 @@
+{
+  "checks": [
+    "Per-part material isolation, finish recipes and scene picking",
+    "Lighting controls update actual Three.js lights",
+    "Camera projection/AO switch, exploded/assembled view and rebuilt geometry with exact pin contacts",
+    "Save payload includes PNG/settings/notes; JSON download/import and browser draft reload",
+    "Style presets, 390px layout, keyboard tabs and Escape"
+  ],
+  "errors": []
+}

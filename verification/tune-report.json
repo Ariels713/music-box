@@ -1,0 +1,17 @@
+{
+  "checks": [
+    "Actual getUserMedia/AudioWorklet/Pitchy pipeline with synthetic microphone melody; no physical microphone used; crank paused during capture",
+    "Explicit preview/stop; custom visible pins match playback and touch tines; styling preset preserves tune; study save includes melody",
+    "Custom tune restores from browser draft; original melody can be restored",
+    "Completed and canceled recordings stop every microphone track",
+    "Pending-permission cancellation releases a late stream; denied permission handled without blocking mechanism"
+  ],
+  "rows": [
+    "0.19s · A3 → A5Remove",
+    "0.98s · B3 → B5Remove",
+    "1.78s · C4 → C6Remove",
+    "2.68s · C4 → C6Remove"
+  ],
+  "errors": [],
+  "limitation": "Synthetic microphone tested in headless Chromium; actual voice/song accuracy and speaker playback not verified."
+}

@@ -1,0 +1,9 @@
+{
+  "checks": [
+    "Current file equals latest shared JSON",
+    "Fresh browser loads saved design and original demo song",
+    "Style then Your saved setup restores exact configuration",
+    "Reload retains exact configuration"
+  ],
+  "errors": []
+}

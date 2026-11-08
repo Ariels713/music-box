@@ -1,0 +1,12 @@
+{
+  "renderer": "Local Three.js",
+  "camera": "Orthographic",
+  "scene": "Exploded model study",
+  "text": false,
+  "logos": false,
+  "dimensions": [
+    1536,
+    1152
+  ],
+  "errors": []
+}

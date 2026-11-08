@@ -1,0 +1,221 @@
+{
+  "version": 1,
+  "name": "Satin brass & steel",
+  "notes": "",
+  "melody": null,
+  "recordButton": {
+    "position": {
+      "x": -1.44,
+      "y": 0,
+      "z": -0.16
+    },
+    "rotation": 0,
+    "scale": 1,
+    "color": "#e4e2dd",
+    "bezelColor": "#d5d4d0",
+    "metalness": 0.17,
+    "roughness": 0,
+    "idleColor": "#ff0011",
+    "recordingColor": "#177825",
+    "glow": 0.45,
+    "baseWidth": 0.5,
+    "wellColor": "#99999b",
+    "baseMetalness": 0.12,
+    "baseRoughness": 0.6,
+    "baseDepth": 0.5,
+    "wellDepth": 0.09,
+    "restHeight": 0.018,
+    "pressDepth": 0.04,
+    "baseOffset": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "lightPosition": {
+      "x": -0.05,
+      "y": 0.02,
+      "z": 0.31
+    },
+    "lightPower": 1.59,
+    "lightRange": 0.7,
+    "washWidth": 0.35,
+    "washDepth": 0.22
+  },
+  "materials": {
+    "cylinder": {
+      "color": "#ac6b51",
+      "metalness": 0.9,
+      "roughness": 0.29,
+      "clearcoat": 0,
+      "opacity": 1,
+      "texture": "brushed",
+      "textureStrength": 0.25,
+      "textureScale": 1
+    },
+    "comb": {
+      "color": "#aebac1",
+      "metalness": 0.94,
+      "roughness": 0.22,
+      "clearcoat": 0,
+      "opacity": 1,
+      "texture": "brushed",
+      "textureStrength": 0.25,
+      "textureScale": 1
+    },
+    "frame": {
+      "color": "#849399",
+      "metalness": 0.74,
+      "roughness": 0.38,
+      "clearcoat": 0,
+      "opacity": 1,
+      "texture": "none",
+      "textureStrength": 0.25,
+      "textureScale": 1
+    },
+    "gears": {
+      "color": "#303a42",
+      "metalness": 0.12,
+      "roughness": 0.56,
+      "clearcoat": 0,
+      "opacity": 1,
+      "texture": "none",
+      "textureStrength": 0.25,
+      "textureScale": 1
+    },
+    "crank": {
+      "color": "#d0dbe0",
+      "metalness": 0.94,
+      "roughness": 0.18,
+      "clearcoat": 0,
+      "opacity": 1,
+      "texture": "none",
+      "textureStrength": 0.25,
+      "textureScale": 1
+    },
+    "grip": {
+      "color": "#69aebc",
+      "metalness": 0.05,
+      "roughness": 0.48,
+      "clearcoat": 0,
+      "opacity": 1,
+      "texture": "none",
+      "textureStrength": 0.25,
+      "textureScale": 1
+    },
+    "hardware": {
+      "color": "#b4bfc2",
+      "metalness": 0.86,
+      "roughness": 0.25,
+      "clearcoat": 0,
+      "opacity": 1,
+      "texture": "none",
+      "textureStrength": 0.25,
+      "textureScale": 1
+    },
+    "base": {
+      "color": "#b98e61",
+      "metalness": 0,
+      "roughness": 0.68,
+      "clearcoat": 0,
+      "opacity": 1,
+      "texture": "wood",
+      "textureStrength": 0.25,
+      "textureScale": 1
+    }
+  },
+  "lighting": {
+    "key": {
+      "enabled": true,
+      "color": "#fff0dc",
+      "intensity": 3.2,
+      "azimuth": -40,
+      "elevation": 55,
+      "shadows": true
+    },
+    "fill": {
+      "enabled": true,
+      "color": "#dce9ff",
+      "intensity": 0.9,
+      "azimuth": 110,
+      "elevation": 25,
+      "shadows": false
+    },
+    "rim": {
+      "enabled": true,
+      "color": "#e6f8ff",
+      "intensity": 2.2,
+      "azimuth": 205,
+      "elevation": 45,
+      "shadows": false
+    },
+    "environment": 1,
+    "environmentRotation": 20,
+    "ambient": 0.3
+  },
+  "scene": {
+    "background": "#f5f3ee",
+    "exposure": 1,
+    "toneMapping": "aces",
+    "shadows": true,
+    "shadowOpacity": 0.3,
+    "shadowSoftness": 5,
+    "contactOpacity": 0.7,
+    "ao": true,
+    "aoRadius": 0.09,
+    "showMark": false
+  },
+  "camera": {
+    "projection": "orthographic",
+    "azimuth": -47.770876421923504,
+    "elevation": 33.82652533609099,
+    "distance": 5.400000000000002,
+    "zoom": 1,
+    "fov": 38,
+    "target": {
+      "x": 0.05999999999999999,
+      "y": 0.42000000000000004,
+      "z": 0.11999999999999998
+    }
+  },
+  "geometry": {
+    "baseWidth": 1.62,
+    "baseDepth": 1.8,
+    "baseThickness": 0.2,
+    "barrelLength": 0.82,
+    "barrelRadius": 0.235,
+    "tineLength": 0.605,
+    "pinHeight": 0.024,
+    "edgeSoftness": 0.75
+  },
+  "composition": {
+    "explode": 0,
+    "rotation": 0,
+    "offsets": {
+      "cylinder": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "comb": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "crank": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "base": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  }
+}

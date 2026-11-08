@@ -1,0 +1,14 @@
+[
+  {
+    "scenario": "immediate refresh",
+    "passed": true
+  },
+  {
+    "scenario": "style preview refresh",
+    "passed": true
+  },
+  {
+    "scenario": "saved setup restore",
+    "passed": true
+  }
+]

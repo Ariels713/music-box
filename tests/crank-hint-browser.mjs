@@ -1,0 +1,80 @@
+import assert from 'node:assert/strict'
+const {chromium}=await import(process.env.PLAYWRIGHT_MODULE||'playwright')
+const browser=await chromium.launch({headless:true}),errors=[]
+try {
+ for(const reducedMotion of ['no-preference','reduce']) {
+  const page=await browser.newPage({viewport:{width:1440,height:1000},reducedMotion})
+  page.on('pageerror',e=>errors.push(String(e)));page.on('console',e=>{if(e.type()==='error')errors.push(e.text())})
+  await page.route('**/__musicbox/study',r=>r.fulfill({json:{settings:null}}))
+  await page.route('**/src/main.js*',async r=>{const response=await r.fetch();await r.fulfill({response,body:await response.text()+`\nwindow.hintTest={ready:studio.ready,step:delta=>{crankHint.update(delta,reducedMotion.matches);dirty=true},state:()=>({motion:crankHint.state(),bounds:(()=>{crankHint.root.updateMatrixWorld(true);return new THREE.Box3().setFromObject(crankHint.root)})(),visible:crankHint.root.visible,parts:crankHint.root.children.length,physical:crankHint.root.children[0].material.isMeshStandardMaterial,radius:crankHint.root.children[0].geometry.parameters.radius,opacity:crankHint.root.children[0].material.opacity,angle:crankAngle,settings:studio.getSettings().crankArrow,position:new THREE.Vector3().setFromMatrixPosition(crankHint.root.matrix).toArray(),arc:crankHint.root.children[0].geometry.parameters.path.getLength()}),grip:()=>{const p=box.hitTarget.getWorldPosition(new THREE.Vector3()).project(camera),r=canvas.getBoundingClientRect();return {x:r.left+(p.x+1)*r.width/2,y:r.top+(1-p.y)*r.height/2}}};`})})
+  await page.goto('http://localhost:5173/');await page.waitForFunction(()=>window.hintTest);await page.evaluate(()=>window.hintTest.ready)
+  if(await page.locator('#studio-toggle').getAttribute('aria-expanded')==='true')await page.locator('#studio-toggle').click()
+  const state=()=>page.evaluate(()=>window.hintTest.state())
+  assert.equal((await state()).visible,true)
+  assert.ok((await state()).parts>=3)
+  assert.equal((await state()).physical,true)
+  assert.equal((await state()).radius,.008)
+  const idle=await state();await page.waitForTimeout(250)
+  assert.equal((await state()).angle,0)
+  if(reducedMotion==='no-preference')assert.ok((await state()).motion.spin<idle.motion.spin)
+  else assert.equal((await state()).motion.spin,idle.motion.spin)
+  assert.equal((await state()).settings.startAngle,idle.settings.startAngle)
+  if(reducedMotion==='no-preference')await page.screenshot({path:'verification/crank-hint.png'})
+  await page.mouse.move(230,250);await page.mouse.down();await page.mouse.move(270,270,{steps:3});await page.mouse.up()
+  assert.equal((await state()).opacity,1)
+  const grip=await page.evaluate(()=>window.hintTest.grip())
+  await page.mouse.move(grip.x,grip.y);await page.mouse.down();await page.waitForTimeout(120)
+  assert.equal((await state()).opacity,1);await page.mouse.up()
+  await page.locator('canvas').focus();await page.keyboard.press('ArrowRight')
+  if(reducedMotion==='no-preference') {
+    assert.equal((await state()).motion.phase,'falling')
+    const top=(await state()).position[1]
+    await page.evaluate(()=>window.hintTest.step(.5))
+    assert.ok((await state()).position[1]<top)
+    await page.screenshot({path:'verification/crank-arrow-dropping.png'})
+    await page.evaluate(()=>window.hintTest.step(5))
+    const landed=await state()
+    assert.equal(landed.motion.phase,'landed');assert.equal(landed.visible,true)
+    assert.ok(landed.bounds.min.y>=-.001&&landed.bounds.min.y<.005)
+    await page.screenshot({path:'verification/crank-arrow-landed.png'})
+    await page.keyboard.press('ArrowRight');assert.equal((await state()).motion.phase,'landed')
+  } else {
+    await page.evaluate(()=>window.hintTest.step(.3))
+    assert.equal((await state()).visible,false)
+    assert.equal((await state()).motion.phase,'gone')
+  }
+  await page.getByRole('button',{name:'Studio',exact:true}).click()
+  await page.getByRole('tab',{name:'Compose',exact:true}).click()
+  await page.getByText('Crank arrow',{exact:true}).click()
+  await page.waitForFunction(()=>window.hintTest.state().visible)
+  const initial=await state()
+  await page.locator('[id="control-crankArrow.position.x"]').fill('0.25')
+  await page.locator('[id="control-crankArrow.thickness"]').fill('0.012')
+  await page.locator('[id="control-crankArrow.arcLength"]').fill('180')
+  await page.locator('[id="control-crankArrow.scale"]').fill('1.2')
+  await page.locator('[id="control-crankArrow.rotation.y"]').fill('20')
+  await page.locator('[id="control-crankArrow.style"]').selectOption('matte')
+  await page.locator('[id="control-crankArrow.color"]').fill('#4279ad')
+  assert.ok((await state()).position[0]>initial.position[0])
+  assert.ok((await state()).arc<initial.arc)
+  assert.equal((await state()).radius,.012)
+  for(const cap of ['butt','square','round']) {
+    await page.locator('[id="control-crankArrow.linecap"]').selectOption(cap)
+    assert.equal((await state()).settings.linecap,cap)
+  }
+  for(const head of ['chevron','cone','none','triangle']) {
+    await page.locator('[id="control-crankArrow.head"]').selectOption(head)
+    assert.equal((await state()).settings.head,head)
+  }
+  const saved=(await state()).settings
+  await page.locator('#studio-preset').selectOption('Soft ceramic')
+  assert.deepEqual((await state()).settings,saved)
+  await page.locator('[id="control-crankArrow.opacity"]').fill('0.8')
+  await page.reload();await page.waitForFunction(()=>window.hintTest);await page.evaluate(()=>window.hintTest.ready)
+  assert.deepEqual((await state()).settings,{...saved,opacity:.8})
+  await page.setViewportSize({width:390,height:844});assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth))
+  await page.unrouteAll({behavior:'ignoreErrors'});await page.close()
+ }
+ assert.deepEqual(errors,[])
+ console.log('Idle spin never drives mechanism; first turn drops and settles arrow; reduced motion stays static then fades. Preview, controls, caps/heads, persistence, mobile and console checks pass.')
+}finally {await browser.close()}

@@ -1,0 +1,317 @@
+{
+  "settings": {
+    "version": 1,
+    "name": "Satin brass & steel",
+    "notes": "",
+    "melody": {
+      "notes": [
+        {
+          "midi": 52,
+          "start": 0.928,
+          "duration": 0.18666666666666665
+        },
+        {
+          "midi": 53,
+          "start": 1.1146666666666667,
+          "duration": 0.17066666666666674
+        },
+        {
+          "midi": 52,
+          "start": 1.2853333333333334,
+          "duration": 0.10133333333333328
+        },
+        {
+          "midi": 52,
+          "start": 1.5146666666666666,
+          "duration": 0.11733333333333329
+        },
+        {
+          "midi": 53,
+          "start": 1.632,
+          "duration": 0.20800000000000018
+        },
+        {
+          "midi": 52,
+          "start": 1.84,
+          "duration": 0.1546666666666665
+        },
+        {
+          "midi": 50,
+          "start": 1.9946666666666666,
+          "duration": 0.3520000000000001
+        },
+        {
+          "midi": 48,
+          "start": 2.3466666666666667,
+          "duration": 0.23466666666666658
+        },
+        {
+          "midi": 50,
+          "start": 2.6613333333333333,
+          "duration": 0.16000000000000014
+        },
+        {
+          "midi": 51,
+          "start": 2.896,
+          "duration": 0.18133333333333335
+        },
+        {
+          "midi": 53,
+          "start": 3.0773333333333333,
+          "duration": 0.10133333333333328
+        },
+        {
+          "midi": 50,
+          "start": 3.493333333333333,
+          "duration": 0.202666666666667
+        },
+        {
+          "midi": 50,
+          "start": 4.026666666666666,
+          "duration": 0.17066666666666652
+        },
+        {
+          "midi": 53,
+          "start": 4.341333333333333,
+          "duration": 0.34133333333333393
+        },
+        {
+          "midi": 58,
+          "start": 4.842666666666666,
+          "duration": 0.2666666666666675
+        },
+        {
+          "midi": 56,
+          "start": 5.109333333333334,
+          "duration": 0.1546666666666665
+        },
+        {
+          "midi": 57,
+          "start": 5.392,
+          "duration": 0.12266666666666648
+        },
+        {
+          "midi": 58,
+          "start": 5.514666666666667,
+          "duration": 0.28800000000000026
+        },
+        {
+          "midi": 51,
+          "start": 5.957333333333334,
+          "duration": 0.1546666666666665
+        },
+        {
+          "midi": 52,
+          "start": 6.112,
+          "duration": 0.1813333333333329
+        },
+        {
+          "midi": 50,
+          "start": 6.293333333333333,
+          "duration": 0.2560000000000002
+        },
+        {
+          "midi": 48,
+          "start": 6.549333333333333,
+          "duration": 0.11733333333333373
+        }
+      ],
+      "transpose": 24
+    },
+    "recordButton": {
+      "position": {
+        "x": -1.27,
+        "y": 0,
+        "z": -0.24
+      },
+      "rotation": 0,
+      "scale": 1,
+      "color": "#e4e2dd",
+      "bezelColor": "#d5d4d0",
+      "metalness": 0.17,
+      "roughness": 0,
+      "idleColor": "#ff0011",
+      "recordingColor": "#177825",
+      "glow": 0.45
+    },
+    "materials": {
+      "cylinder": {
+        "color": "#987b45",
+        "metalness": 0.84,
+        "roughness": 0.29,
+        "clearcoat": 0,
+        "opacity": 1,
+        "texture": "brushed",
+        "textureStrength": 0.24,
+        "textureScale": 1
+      },
+      "comb": {
+        "color": "#74797b",
+        "metalness": 0.9,
+        "roughness": 0.42,
+        "clearcoat": 0,
+        "opacity": 1,
+        "texture": "brushed",
+        "textureStrength": 0.25,
+        "textureScale": 1
+      },
+      "frame": {
+        "color": "#999999",
+        "metalness": 0.85,
+        "roughness": 0.32,
+        "clearcoat": 0,
+        "opacity": 1,
+        "texture": "brushed",
+        "textureStrength": 0.25,
+        "textureScale": 1
+      },
+      "gears": {
+        "color": "#474747",
+        "metalness": 0.12,
+        "roughness": 0.56,
+        "clearcoat": 0,
+        "opacity": 1,
+        "texture": "none",
+        "textureStrength": 0.25,
+        "textureScale": 1
+      },
+      "crank": {
+        "color": "#8c9ea6",
+        "metalness": 0.94,
+        "roughness": 0.18,
+        "clearcoat": 0,
+        "opacity": 1,
+        "texture": "none",
+        "textureStrength": 0.25,
+        "textureScale": 1
+      },
+      "grip": {
+        "color": "#9aa25d",
+        "metalness": 0.05,
+        "roughness": 0.48,
+        "clearcoat": 0,
+        "opacity": 1,
+        "texture": "none",
+        "textureStrength": 0.25,
+        "textureScale": 1
+      },
+      "hardware": {
+        "color": "#b4bfc2",
+        "metalness": 0.86,
+        "roughness": 0.25,
+        "clearcoat": 0,
+        "opacity": 1,
+        "texture": "none",
+        "textureStrength": 0.25,
+        "textureScale": 1
+      },
+      "base": {
+        "color": "#b98e61",
+        "metalness": 0,
+        "roughness": 0.68,
+        "clearcoat": 0,
+        "opacity": 1,
+        "texture": "wood",
+        "textureStrength": 0.25,
+        "textureScale": 1
+      }
+    },
+    "lighting": {
+      "key": {
+        "enabled": true,
+        "color": "#fff0dc",
+        "intensity": 3.85,
+        "azimuth": 248,
+        "elevation": 54,
+        "shadows": true
+      },
+      "fill": {
+        "enabled": true,
+        "color": "#dce9ff",
+        "intensity": 0.9,
+        "azimuth": 110,
+        "elevation": 25,
+        "shadows": false
+      },
+      "rim": {
+        "enabled": true,
+        "color": "#e6f8ff",
+        "intensity": 2.2,
+        "azimuth": 205,
+        "elevation": 45,
+        "shadows": false
+      },
+      "environment": 0.9,
+      "environmentRotation": 161,
+      "ambient": 0.28
+    },
+    "scene": {
+      "background": "#ff9999",
+      "exposure": 1,
+      "toneMapping": "aces",
+      "shadows": true,
+      "shadowOpacity": 0.37,
+      "shadowSoftness": 5,
+      "contactOpacity": 0.7,
+      "ao": true,
+      "aoRadius": 0.09,
+      "showMark": false
+    },
+    "camera": {
+      "projection": "orthographic",
+      "azimuth": -53.9877520682526,
+      "elevation": 23.743051964839623,
+      "distance": 5.400000000000196,
+      "zoom": 0.7682442725789559,
+      "fov": 38,
+      "target": {
+        "x": 0.05999999999999999,
+        "y": 0.42000000000000004,
+        "z": 0.11999999999999998
+      }
+    },
+    "geometry": {
+      "baseWidth": 1.62,
+      "baseDepth": 1.8,
+      "baseThickness": 0.2,
+      "barrelLength": 0.82,
+      "barrelRadius": 0.235,
+      "tineLength": 0.605,
+      "pinHeight": 0.024,
+      "edgeSoftness": 0.75
+    },
+    "composition": {
+      "explode": 0,
+      "rotation": -9,
+      "offsets": {
+        "cylinder": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "comb": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "frame": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "crank": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "base": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    }
+  },
+  "savedAt": "2026-11-07T19:38:44.243Z",
+  "preview": "studies/2026-11-07T19-38-44-243Z-382261a0.png"
+}

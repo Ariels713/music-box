@@ -1,0 +1,27 @@
+{
+  "date": "2026-11-08T19:40:31.973Z",
+  "checks": [
+    "No autoplay or idle mechanism rotation; guide may rotate independently",
+    "Crank starts pointing upward without advancing the cylinder or striking a note",
+    "All visible pins meet their pitch-matched tine at the exact audio crossing angle",
+    "Grab disables orbit; holding still has no movement/onsets",
+    "Two clockwise pointer circles turn crank by -4π; camera unchanged; audio unlocked; notes emitted",
+    "Release stops and restores orbit",
+    "Pointer cancel, lost capture, window blur stop immediately",
+    "Dragging off crank orbits without mechanism movement",
+    "Keyboard steps use same rotation; reverse silent",
+    "Scroll/trackpad wheel and two-finger pinch leave camera zoom and distance unchanged",
+    "Fast multi-lap input caps simultaneous voices at 12",
+    "Offline Web Audio: nonzero pluck, C5 fundamental, natural decay, silent finished tail",
+    "390px layout has no horizontal overflow; screenshots captured",
+    "Browser console and page errors: none"
+  ],
+  "audioResult": {
+    "early": 0.12065864946652785,
+    "late": 0.00002911131434798089,
+    "tail": 0,
+    "fundamental": 523
+  },
+  "errors": [],
+  "limitation": "Headless Chromium tested. Signal verified offline; sound not listened to by a human."
+}

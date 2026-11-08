@@ -1,0 +1,15 @@
+{
+  "checks": [
+    "One fuzzy physical note per forward pin crossing; no idle/reverse spawning",
+    "Decorative notes do not intercept orbit gestures or alter mechanism rotation",
+    "Slim silhouettes retain peaceful descent and a soft landing",
+    "Slow descent/bounce reaches a stable floor pose without sinking below the surface",
+    "Pool reaches and stays bounded to 100; reduced motion clears and suppresses decorative drops while notes still play",
+    "Studio enable/disable and Clear controls work",
+    "Sheen/fiber brightness update existing and new notes and persist across refresh, including zero sheen shader change",
+    "Single and palette colors recolor existing and new notes, including fibers; edits survive refresh",
+    "All three rounded silhouettes selectable; mixed drops cycle through the family; every shape rests at floor level",
+    "Every full note starts above the viewport and moves downward at wide zoom, low/high camera angles and mobile sizes, in both projections"
+  ],
+  "errors": []
+}

@@ -1,0 +1,182 @@
+{
+  "version": 1,
+  "name": "Satin brass & steel",
+  "notes": "",
+  "materials": {
+    "cylinder": {
+      "color": "#43646b",
+      "metalness": 0.84,
+      "roughness": 0.29,
+      "clearcoat": 0,
+      "opacity": 1,
+      "texture": "brushed",
+      "textureStrength": 0.24,
+      "textureScale": 1
+    },
+    "comb": {
+      "color": "#74797b",
+      "metalness": 0.9,
+      "roughness": 0.42,
+      "clearcoat": 0,
+      "opacity": 1,
+      "texture": "brushed",
+      "textureStrength": 0.25,
+      "textureScale": 1
+    },
+    "frame": {
+      "color": "#999999",
+      "metalness": 0.85,
+      "roughness": 0.32,
+      "clearcoat": 0,
+      "opacity": 1,
+      "texture": "brushed",
+      "textureStrength": 0.25,
+      "textureScale": 1
+    },
+    "gears": {
+      "color": "#474747",
+      "metalness": 0.12,
+      "roughness": 0.56,
+      "clearcoat": 0,
+      "opacity": 1,
+      "texture": "none",
+      "textureStrength": 0.25,
+      "textureScale": 1
+    },
+    "crank": {
+      "color": "#8c9ea6",
+      "metalness": 0.94,
+      "roughness": 0.18,
+      "clearcoat": 0,
+      "opacity": 1,
+      "texture": "none",
+      "textureStrength": 0.25,
+      "textureScale": 1
+    },
+    "grip": {
+      "color": "#9aa25d",
+      "metalness": 0.05,
+      "roughness": 0.48,
+      "clearcoat": 0,
+      "opacity": 1,
+      "texture": "none",
+      "textureStrength": 0.25,
+      "textureScale": 1
+    },
+    "hardware": {
+      "color": "#b4bfc2",
+      "metalness": 0.86,
+      "roughness": 0.25,
+      "clearcoat": 0,
+      "opacity": 1,
+      "texture": "none",
+      "textureStrength": 0.25,
+      "textureScale": 1
+    },
+    "base": {
+      "color": "#b98e61",
+      "metalness": 0,
+      "roughness": 0.68,
+      "clearcoat": 0,
+      "opacity": 1,
+      "texture": "wood",
+      "textureStrength": 0.25,
+      "textureScale": 1
+    }
+  },
+  "lighting": {
+    "key": {
+      "enabled": true,
+      "color": "#fff0dc",
+      "intensity": 3.85,
+      "azimuth": 248,
+      "elevation": 54,
+      "shadows": true
+    },
+    "fill": {
+      "enabled": true,
+      "color": "#dce9ff",
+      "intensity": 0.9,
+      "azimuth": 110,
+      "elevation": 25,
+      "shadows": false
+    },
+    "rim": {
+      "enabled": true,
+      "color": "#e6f8ff",
+      "intensity": 2.2,
+      "azimuth": 205,
+      "elevation": 45,
+      "shadows": false
+    },
+    "environment": 0.9,
+    "environmentRotation": 161,
+    "ambient": 0.28
+  },
+  "scene": {
+    "background": "#ff9999",
+    "exposure": 1,
+    "toneMapping": "aces",
+    "shadows": true,
+    "shadowOpacity": 0.37,
+    "shadowSoftness": 5,
+    "contactOpacity": 0.7,
+    "ao": true,
+    "aoRadius": 0.09,
+    "showMark": false
+  },
+  "camera": {
+    "projection": "orthographic",
+    "azimuth": -62.83243924508821,
+    "elevation": 18.637215615304953,
+    "distance": 5.40000000000018,
+    "zoom": 0.9796917302662302,
+    "fov": 38,
+    "target": {
+      "x": 0.05999999999999999,
+      "y": 0.42000000000000004,
+      "z": 0.11999999999999998
+    }
+  },
+  "geometry": {
+    "baseWidth": 1.62,
+    "baseDepth": 1.8,
+    "baseThickness": 0.2,
+    "barrelLength": 0.82,
+    "barrelRadius": 0.235,
+    "tineLength": 0.605,
+    "pinHeight": 0.024,
+    "edgeSoftness": 0.75
+  },
+  "composition": {
+    "explode": 0,
+    "rotation": -9,
+    "offsets": {
+      "cylinder": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "comb": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "crank": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "base": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  }
+}

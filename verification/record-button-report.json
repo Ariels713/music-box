@@ -1,0 +1,16 @@
+{
+  "checks": [
+    "Button position/color/brightness controls affect scene; continuous container rim light is red idle, green immediately on press (including pending permission), red immediately on release",
+    "Default 48-note demo remains installed during capture and is replaced only by a successful recording on release",
+    "Dot removed; thin circular light belongs to fixed base and stays still during cap travel",
+    "Near-flush resting height and short press depth remain independent of well depth",
+    "Raycast press sinks 3D cap; hold records; release automatically replaces pins with new color; no orbit; cap returns",
+    "Pointer cancel discards capture and preserves the installed cylinder",
+    "Release during permission wait cancels; a late granted stream is stopped",
+    "Keyboard hold/Escape and reduced-motion instant press work; mobile layout does not overflow",
+    "Button configuration survives draft save/reload",
+    "Embossed note stays unlit; recess light follows press/release; base dimensions/offsets and light position controls persist; brightness zero disables floor wash"
+  ],
+  "errors": [],
+  "limitation": "Synthetic microphone in Chromium; human tactile/voice judgment remains manual."
+}

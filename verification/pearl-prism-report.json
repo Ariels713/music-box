@@ -1,0 +1,9 @@
+{
+  "preset": "Pearl & prism",
+  "checks": [
+    "Preset selectable in browser",
+    "Polished cylinder and pearl metal frame controls applied",
+    "Scene rendered without console or page errors"
+  ],
+  "errors": []
+}

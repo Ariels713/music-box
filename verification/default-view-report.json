@@ -1,0 +1,8 @@
+{
+  "checks": [
+    "Bundled default visual configuration matches shared snapshot",
+    "Reset view returns to shared camera",
+    "Original demo tune retained as fallback"
+  ],
+  "errors": []
+}
